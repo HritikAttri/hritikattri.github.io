@@ -237,5 +237,70 @@
     .span-1-of-2.projects-part {
         width: 100%;
     }
-    
+}
+
+/* Smaller phones: (0 to 400px) */
+@media only screen and (max-width: 361px) {
+    html {
+        font-size: 15px;
+    }
+
+    /* ======================== */
+    /* Navigation */
+    /* ======================== */
+
+    .mobile-nav {
+        display: inline-block;
+        font-size: 80%;
+        padding-bottom: 2px;
+    }
+
+    .my-photo img {
+        height: 130px;
+        width: 130px;
+        margin-top: 25px;
+    }
+
+    .header-part h1 {
+        padding-top: 60px;
+    }
+
+    .header-part p {
+        padding-left: 30px;
+        padding-right: 40px;
+    }
+
+    .span-1-of-2.my-photo > img {
+        top: 40%;
+        left: 50%;
+    }
+
+    .span-1-of-2.header-part {
+        top: 70%;
+        left: 50%;
+        width: 100%;
+    }
+
+    /* ======================== */
+    /* Projects */
+    /* ======================== */
+
+    .row {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .img-projects {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .projects-part {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .span-1-of-2.projects-part {
+        width: 100%;
+    }
 }
