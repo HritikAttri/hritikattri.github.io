@@ -1,0 +1,473 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>My page</title>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="resources/css/blog/style.css">
+        <link rel="stylesheet" href="resources/css/blog/queries.css">
+    </head>
+    <body>
+        <section class="header">
+            <h1>Welcome to my blog</h1>
+        </section>
+        <section class="blogs">
+            <div class="row">
+                <div class="blog">
+                    <h2>Sentiment Analysis using Scikit-Learn and Model Deployment using Flask and Docker</h2>
+                    <h3 class="date-written-imported">January 1, 2020</h3>
+                    <p class="imported">(Imported from my wordpress website)</p>
+                    <p class="blog-body">
+                        In this section, we will analyze the sentiments of movie reviews and create a model. Then, we will deploy this model as a REST API using Flask RESTful, and finally create a Docker container for storing this code. The data used can be found <a href="https://www.kaggle.com/c/sentiment-analysis-on-movie-reviews/data" class="link">here</a>. You can find the full implementation of the code at my gihub page <a href="https://github.com/HritikAttri/deployment" class="link">here</a>.<br><br>
+
+                        First of all, we will use TF-IDF algorithm and Linear SVC on top of it to analyze sentiments of movie reviews. I have already explained what the TF-IDF algorithm is in one of my previous articles, so take a look at it if you don’t know how it works.<br><br>
+                        
+                        Moving forward, we will deploy our flask model in a python script “app.py”. Let’s import all the required libraries, and create the API using Flask.<br><br>
+                        
+                        <div class="code">
+                            from flask import Flask<br>
+                            from flask_restful import reqparse, abort, Api, Resource<br>
+                            import pickle<br>
+                            
+                            app = Flask(__name__)<br>
+                            api = Api(app)<br>
+                        </div><br>
+                        Now, we load our models. You can find how they were created <a href="https://github.com/HritikAttri/nlp/blob/master/sentiment_analysis.ipynb" class="link">here</a>. If you have read my TF-IDF tutorial, it shouldn’t take longer than a minute or two to go through this code.<br><br>
+                        
+                        <div class="code">
+                            with open('vectorizer.pkl', 'rb') as f:<br>
+                            vectorizer = pickle.load(f)<br>
+                        
+                        with open('sentiment_classifier.pkl', 'rb') as f:<br>
+                            sentiment_classifier = pickle.load(f)<br>
+                        </div><br>
+                        Now, we create parameters that users can send to this API. These parameters will be stored in a Python dictionary/JSON object. We have added a “query” parameter. This will make a lot more sense when we actually use these parameters, so just hold on.<br><br>
+                        
+                        <div class="code">
+                            parser = reqparse.RequestParser()<br>
+                            parser.add_argument('query')<br>
+                        </div><br>
+                        We use the Resource class to create Flask RESTful APIs. We can also create our methods corresponding to the HTTP requests we need to make. Here, as the user will provide the review, we use a GET request. Then, we store the input and use it to predict the sentiment, as shown.<br><br>
+                        
+                        <div class="code">
+                            class PredictSentiment(Resource):<br>
+                            def get(self):<br>
+                                args = parser.parse_args()<br>
+                                user_query = args['query']<br>
+                        
+                                user_input = vectorizer.transform([str(user_query)])<br>
+                                prediction = sentiment_classifier.predict(user_input)<br>
+                        
+                                result = 'Negative' if prediction == 0 else 'Positive'<br>
+                                output = {'Prediction': result}<br>
+                        
+                                return output<br>
+                        </div><br>
+                        Now, we add this resource to this API, and run it.<br><br>
+                        
+                        <div class="code">
+                            api.add_resource(PredictSentiment, '/')<br>
+                        
+                            if __name__ == '__main__':<br>
+                                app.run(host='0.0.0.0ebug = True)<br>
+                        </div><br>
+                        We are done with Flask. Moving on to docker, understand the directory structure first:<br><br>
+                        
+                        <img src="vendors/img/blog/sentiment_analysis_deployment/1.png" alt="" class="blog-img">
+
+                        Inside the web directory, we have:<br><br>
+
+                        <img src="vendors/img/blog/sentiment_analysis_deployment/2.png" alt="" class="blog-img">
+                        
+                        We have already discussed how the 2 .pkl model files have been created and the app.py as well. The “web” directory here is essentially one of the services that has been added to this Docker container. Now, we explore the “docker-compose.yml” file.<br><br>
+
+                        <img src="vendors/img/blog/sentiment_analysis_deployment/3.png" alt="" class="blog-img">
+                        
+                        Here, as I mentioned just now, “web” has been added as a service to this docker container. We are also saying to build this service from the “./web” directory on our machine, as you can see from the directory structure above, and this service should work at port 5000. Moving on to Dockerfile:<br><br>
+
+                        <img src="vendors/img/blog/sentiment_analysis_deployment/4.png" alt="" class="blog-img">
+                        
+                        First of all, we will pull the python docker image from DockerHub, which is present here. Now inside this docker container, we set the working directory, and copy the requirements there and install them using pip. Then, we copy all the files from our local machine inside the current directory(“./web”) and we put it into the current working directory in Docker container(“/app”). Finally, we tell docker to run the command(CMD) “python app.py”, which would run our script.<br><br>
+                        
+                        Finally, we take a look at requirements.txt, which will be installed into our Docker container, and are required to run our Python script.<br><br>
+
+                        <img src="vendors/img/blog/sentiment_analysis_deployment/5.png" alt="" class="blog-img">
+                        
+                        Now, we are ready to build this docker container. If you have already installed docker, open a command prompt and move into the project directory. use the command as shown:<br><br>
+
+                        <img src="vendors/img/blog/sentiment_analysis_deployment/6.png" alt="" class="blog-img">
+                        
+                        This will display all the docker containers. As we don’t have any yet, it is empty. Now, we build our docker container and this should take some time. This is executing the Dockerfile.<br><br>
+
+                        <img src="vendors/img/blog/sentiment_analysis_deployment/7.png" alt="" class="blog-img">
+                        
+                        Now, we run our docker container, as follows:
+
+                        <img src="vendors/img/blog/sentiment_analysis_deployment/8.png" alt="" class="blog-img">
+                        
+                        If you run the “docker ps -a” command again, you will see the docker container in the list this time. Now, we can make our predictions from our model deployed using Flask:<br><br>
+
+                        <img src="vendors/img/blog/sentiment_analysis_deployment/9.png" alt="" class="blog-img">
+                        
+                        Congrats! This surely takes a long time, but model deployment is a part of data analytics just as essential as data collection, preprocessing and modelling.<br><br>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="blog">
+                    <h2>Finding most popular hashtags on Twitter using Spark Streaming</h2>
+                    <h3 class="date-written-imported">October 27, 2019</h3>
+                    <p class="imported">(Imported from my wordpress website)</p>
+                    <p class="blog-body">
+                            Spark Streaming is a component of Apache Spark. It is used to stream data in real-time from different data sources. In this section, we will use Spark Streaming to extract popular hashtags from tweets. The complete code implementation in Scala can be found at my GitHub page <a href="https://github.com/HritikAttri/big_data" class="link">here</a>.<br><br>
+
+                            Working of Spark Streaming can be quickly explained as follows:<br><br>
+
+                            1) Streaming Context: It receives stream data as input and produces batches of data.<br>
+                            2) Discretized Stream(DStream): It is a continuous data stream, which the user can analyze. It is represented by a continuous set of RDDs and each RDD represents stream data from a specific time interval. The receiver receives streaming data and converts it into Input DStreams which can be used for processing. Certain transformations can be applied to DStream objects. Output DStreams are used to export data to external databases for storing it. <br>
+                            3) Caching: If the streaming data is to be computed multiple times, it is better to persist it using persist(). It will load this data in memory and by default, data is persisted two times in memory for backup in case of failure.<br>
+                            4) Checkpoints: We create checkpoints at certain intervals to rollback to that point in case of failure in the future.<br><br>
+                            Let’s begin by importing the libraries:<br><br>
+
+                            <div class="code">
+                                package com.spark.examples<br><br>
+
+                                import scala.io.Source<br>
+                                import org.apache.log4j.{Level, Logger} <br>
+                                import org.apache.spark._<br>
+                                import org.apache.spark.SparkContext._<br>
+                                import org.apache.spark.streaming._<br>
+                                import org.apache.spark.streaming.twitter._<br>
+                                import org.apache.spark.streaming.StreamingContext._ <br>
+                                Set the log level to print errors only.<br>
+    
+                                def setupLogging() = {  <br>
+                                    val rootLogger = Logger.getRootLogger()<br>
+                                    rootLogger.setLevel(Level.ERROR)   <br>
+                                }<br>
+                            </div><br>
+
+                            We need to set up the twitter configuration file. For this, one needs to have a Twitter Developer Account. Go <a href="https://developer.twitter.com/en/apps" class="link">here</a>. Fill the details, create an app, go to details, then keys and tokens and click on regenerate button. We need the API key, API secret key, access token, access secret token to connect to Twitter and stream data.<br><br>
+
+                            <div class="code">
+                                def setupTwitter() = {<br>
+                                    for(line <- Source.fromFile("C://twitter.txt").getLines<br>     
+                                    val fields = line.split(" ")<br>
+                                    if(fields.length == 2) {<br>
+                                        System.setProperty("twitter4j.oauth." + fields(0), fields(1))<br>
+                                    }<br>
+                                    }<br>
+                                }<br>
+                            </div><br>
+                            Creating a StreamingContext which will stream batches of data every one second.<br><br>
+
+                            <div class="code">
+                                val ssc = new StreamingContext("local[*]", "PopularHashtags", Seconds(1))<br>
+                            </div><br>
+                            Create a DStream object for Twitter streaming.<br><br>
+
+                            <div class="code">
+                                val tweets = TwitterUtils.createStream(ssc, None)<br>
+                            </div><br>
+                            Extract hashtags from each tweet.<br><br>
+
+                            <div class="code">
+                                val text = tweets.map(x => x.getText())<br>
+                                val words = text.flatMap(x => x.split(" "))<br>
+                                val hashtags = words.filter(x => x.startsWith("#"))<br>
+                            </div><br>
+                            Now, we will extract hashtags in real-time for 5 minutes, and in a window of 1 second each, we update the count of the hashtags.<br><br>
+
+                            <div class="code">
+                                val hashtags_values = hashtags.map(x => (x, 1))  <br>
+                                val hashtags_count = hashtags_values.reduceByKeyAndWindow((x, y) => x + y, (x, y) => x - y, Seconds(300), Seconds(1))<br>
+                            </div><br>
+                            Sort the results in descending order.<br><br>
+
+                            <div class="code">
+                                val results = hashtags_count.transform(x => x.sortBy(x => x._2, false))<br>
+                            </div><br>
+
+                            Set up a checkpoint.<br><br>
+
+                            <div class="code">
+                                ssc.checkpoint("C://checkpoint")   <br>  
+                                ssc.start() <br>
+                                ssc.awaitTermination()<br>
+                            </div><br>                                     
+                            I ran this code in Scala eclipse IDE. After terminating the process, here are the results.<br><br>
+
+                            <img src="vendors/img/blog/spark_streaming/1.png" alt="" class="blog-img">
+
+                            As you can see, #BTS was the most popular hashtag during the code execution with a count of 86.<br>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="blog">
+                    <h2>Topic Modeling using Latent Dirichlet Allocation in Scikit-Learn</h2>
+                    <h3 class="date-written-imported">October 20, 2019</h3>
+                    <p class="imported">(Imported from my wordpress website)</p>
+                    <p class="blog-body">
+                        Topic modeling is used to extract topics with keywords in unlabeled documents. There are several topic modeling algorithms out there which include, one of which will be covered in this section, namely: Latent Dirichlet Allocation(LDA). The complete implementation in Scikit-Learn can be found at my GitHub page <a href="https://github.com/HritikAttri/nlp" class="link">here</a>.<br><br>
+                        
+                        Latent Dirichlet Allocation(LDA) is a topic modeling algorithm based on Dirichlet distribution. The procedure of LDA can be explained as follows:<br><br>
+                        
+                        1) We choose a fixed number of topics(=k).<br><br>
+                        2) Go through each document, and randomly assign each word of document to one of the k documents.<br><br>
+                        3) Now, iterate over each word in every document.<br><br>
+                        4) For each word in every document, for each topic t, find:<br><br>
+                            P(t|d) = Proportion of words in document d that are currently assigned to topic t<br>
+                            P(w|t) = Proportion of assignments to topic t over all documents that come from this word w<br><br>     
+                        5) Reassign each word w a new topic, using:<br><br>
+                        
+                         t(w) = p(t|d) * p(w|t) = Probability that topic t generated word w<br><br>
+                        Let’s start by importing the libraries and loading data.<br><br>
+                        
+                        <div class="code">
+                            import pandas as pd<br>
+                            import numpy as np<br>
+                            
+                            npr = pd.read_csv('npr.csv')<br>
+                        </div><br>
+                        As I mentioned, LDA works by assigning a random topic number to each word of the document. So, to tokenize the data, we use CountVectorizer.<br><br>
+                        
+                        <div class="code">
+                            from sklearn.feature_extraction.text import CountVectorizer<br>
+                        
+                            cv = CountVectorizer(max_df = 0.95, min_df = 2, stop_words = 'english')<br>
+                            
+                            df = cv.fit_transform(npr['Article'])<br>
+                        </div><br>
+                        
+                        Now, we can apply the Latent Dirichlet Allocation(LDA) method.<br><br>
+
+                        <div class="code">
+                            from sklearn.decomposition import LatentDirichletAllocation<br>
+                        
+                            lda = LatentDirichletAllocation(n_components = 7, random_state = 42)<br>
+                            
+                            lda.fit(df)<br>
+                        </div><br>
+                        Now, we can display the results using:<br><br>
+
+                        <div class="code">
+                            for index, topic in enumerate(lda.components_):<br>
+                            print(f'Top 15 words for Topic #{index}')<br>
+                            print([cv.get_feature_names()[i] for i in topic.argsort()[-15:]])<br>
+                            print('\n')<br>
+                        </div><br>
+
+                        <img src="vendors/img/blog/latent_dirichlet_allocation/1.png" alt="" class="blog-img">
+                        
+                        Note that LDA is an unsupervised learning algorithm. We did not feed the correct topics to this algorithm, and yet the answers look reasonable. We can also use topic modeling algorithms like Non-Negative Matrix Factorization(NMF or NNMF) for the same purpose.<br>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="blog">
+                    <h2>Feature Extraction using TF-IDF algorithm</h2>
+                    <h3 class="date-written-imported">October 12, 2019</h3>
+                    <p class="imported">(Imported from my wordpress website)</p>
+                    <p class="blog-body">
+                        The full code implementation along with data used in this section can be found at my GitHub page <a href="https://github.com/HritikAttri/nlp" class="link">here</a>.<br><br>
+
+                        Suppose we have a document(or a collection of documents i.e, corpus), and we want to summarize it using a few keywords only. In the end, we want some method to compute the importance of each word.<br><br>
+                        
+                        One way to approach this would be to count the no. of times a word appears in a document. So, the word’s importance is directly proportional to its frequency. This method is, therefore, called Term Frequency(TF).<br><br>
+                        
+                        <img src="vendors/img/blog/TFIDF/1.png" alt="" class="blog-img">
+                        
+                        This method fails in practical use as words like “the”, “an”, “a”, etc. will almost always be the result of this method, as they occur more frequently. But of course, they are not the right way to summarize our document.<br><br>
+                        
+                        We also want to take into consideration how unique the words are, this method is called Inverse Document Frequency(IDF).<br><br>
+                        
+                        <img src="vendors/img/blog/TFIDF/2.png" alt="" class="blog-img">
+                        
+                        So, the product of TF and IDF will give us a measure of how frequent the word is in a document multiplied by how unique the word is, giving rise to Term Frequency-Inverse Document Frequency(TF-IDF) measure.<br><br>
+                        
+                        <img src="vendors/img/blog/TFIDF/3.gif" alt="" class="blog-img">
+                        
+                        We implement this using scikit-learn. Let’s begin by reading the file.<br><br>
+                        
+                        <div class="code">
+                            df = pd.read_csv('smsspamcollection.tsv', sep = '\t')<br>
+                        </div><br>
+                        
+                        Split the data into training and test set.<br><br>
+                        
+                        <div class="code">
+                            from sklearn.model_selection import train_test_split<br>
+                            X = df['message']<br>
+                            y = df['label']<br>  
+                            X_train, X_test, y_train, y_test = train_test_split(X, y, random_state = 42, test_size = 0.3)<br>
+                        </div><br>
+                        In scikit-learn, the TF-IDF algorithm is implemented using TfidfTransformer. This transformer needs the count matrix which it will transform later. Hence, we use CountVectorizer first.<br><br>
+
+                        <div class="code">
+                            from sklearn.feature_extraction.text import CountVectorizer<br>
+                            from sklearn.feature_extraction.text import TfidfTransformer<br>
+                            count_vect = CountVectorizer()<br>
+                            X_train_counts = count_vect.fit_transform(X_train)<br>
+                            tfidf_transformer = TfidfTransformer()<br>
+                            X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)<br>
+                        </div><br>
+
+                        Alternatively, one can use TfidfVectorizer, which is the equivalent of CountVectorizer followed by TfidfTransformer<br><br>
+                        
+                        <div class="code">
+                            from sklearn.feature_extraction.text import TfidfVectorizer<br>
+                            vectorizer = TfidfVectorizer()<br>
+                            X_train_final = vectorizer.fit_transform(X_train)<br>
+                        </div><br>
+                        Now, all that’s left to do is use a machine learning algorithm. We can summarize all that we have done so far using a scikit-learn pipeline.<br><br>
+                        
+                        <div class="code">
+                            from sklearn.pipeline import Pipeline<br>
+                        
+                            text_clf = Pipeline([('tfidf', TfidfVectorizer()),<br>
+                                                  ('clf', LinearSVC()),<br>
+                                                ])<br>
+                            text_clf.fit(X_train, y_train)<br>
+                        </div><br>
+                        We can find predictions using the predict() method.<br><br>
+                        
+                        <div class="code">
+                            predictions = text_clf.predict(X_test)<br>
+                        </div><br>
+                        
+                        To evaluate the predictions, we use different classification metrics.<br><br>
+                        
+                        <div class="code">
+                            from sklearn.metrics import confusion_matrix, accuracy_score, classification_report<br>
+                        
+                            print(accuracy_score(y_test, predictions))<br>
+                            print(confusion_matrix(y_test, predictions))<br>
+                            print(classification_report(y_test, predictions))<br>
+                        </div><br>
+
+                        <img src="vendors/img/blog/TFIDF/4.png" alt="" class="blog-img">
+                        
+                        We have obtained than 99% accuracy in predicting whether the SMS message is spam or ham, and we have performed feature extraction from the raw text in the process.<br>
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="blog">
+                    <h2>Web Scraping with Selenium</h2>
+                    <h3 class="date-written-imported">October 6, 2019</h3>
+                    <p class="imported">(Imported from my wordpress website)</p>
+                    <p class="blog-body">
+                        Data science learners have to spend a lot of time cleaning data to make sense of it before using machine learning algorithms. Being able to collect data is a skill just as important, and a cool one too! In this section, I will explain how to collect data of LinkedIn profiles and store it into MS Excel using Scrapy.<br><br>
+    
+                        An implementation of this code can be directly found at my GitHub page <a href="https://github.com/HritikAttri/web_scraping" class="link">here</a>.<br><br>
+    
+    
+                        Assume that your employer wants to hire Python web developers from London. Such tasks can be time-consuming and automating this process can be very useful. I chose Scrapy and Selenium for following reasons:<br><br>
+    
+                        1) Scrapy is a very fast fully stacked web scraping framework. BeautifulSoup is not as fast and requires more code relatively.<br><br>
+                        2) Scrapy is not well suited for scraping heavy dynamic pages like LinkedIn. Selenium’s web drivers can make this task very easy for us.<br><br>
+                        While I could have used the Scrapy framework, for keeping it simple, I have implemented the code using a simple Python script.<br><br>
+                        Lets start by importing required libraries.<br><br>
+                        <div class="code">
+                            import csv<br>
+                            from parsel import Selector<br>
+                            from time import sleep<br>
+                            from selenium import webdriver<br>
+                            from selenium.webdriver.common.keys import Keys<br>
+                            Now, we need to set up a “writer” for storing our scraped elements into MS Excel.<br>
+        
+                            writer = csv.writer(open('output.csv', 'w+', encoding='utf-8-sig', newline=''))<br>
+                            writer.writerow(['Name', 'Position', 'Company', 'Education', 'Location', 'URL'])<br>
+                        </div><br>
+    
+    
+                        We need to be logged in our own LinkedIn account first to be able to scrape through other LinkedIn profiles. We do this by Selenium webdriver.<br><br>
+                        
+                        <div class="code">
+                            driver = webdriver.Chrome('C://Users//Hritik//Downloads//chromedriver')<br>
+                            driver.get('https://www.linkedin.com/')<br>
+        
+                            username = driver.find_element_by_name("session_key")<br>
+                            username.send_keys('enter-your-email-here')<br>
+                            sleep(0.5)<br>
+        
+                            password = driver.find_element_by_name('session_password')<br>
+                            password.send_keys('enter-your-password-here')<br>
+                            sleep(0.5)<br>
+        
+                            sign_in_button = driver.find_element_by_class_name('sign-in-form__submit-btn')<br>
+                            sign_in_button.click()<br>
+                            sleep(2)<br>
+                        </div><br>
+                        The following code will help us extract the urls of LinkedIn profiles we are after.<br><br>
+                        
+                        <div class="code">
+                            driver.get('https://www.google.com/')<br>
+                            search_query = driver.find_element_by_name('q')<br>
+                            search_query.send_keys('site:linkedin.com/in AND "python developer" AND "london"')<br>
+                            search_query.send_keys(Keys.RETURN)<br>
+                            sleep(0.5)<br>
+        
+                            urls = driver.find_elements_by_xpath('//*[@class = "r"]/a[@href]')<br>
+                            urls = [url.get_attribute('href') for url in urls]<br>
+                            sleep(0.5)<br>
+                        </div><br>
+                        In this part, we scrape through the required details of each LinkedIn profile, such as name, position, experience, etc.<br><br>
+                        
+                        <div class="code">
+                            for url in urls:<br>
+                            driver.get(url)<br>
+                            sleep(2)<br>
+    
+                            sel = Selector(text = driver.page_source)<br>
+    
+                            name = sel.xpath('//*[@class = "inline t-24 t-black t-normal break- <br>
+                            words"]/text()').extract_first().split()<br>
+    
+                            name = ' '.join(name)<br>
+
+                            position = sel.xpath('//*[@class = "mt1 t-18 t-black t-normal"]/text()').extract_first().split()<br>
+                            position = ' '.join(position)<br>
+    
+                            experience = sel.xpath('//*[@class = "pv-top-card-v3--experience-list"]')<br>
+    
+                            company = experience.xpath('./li[@data-control-name = <br>
+                            "position_see_more"]//span/text()').extract_first()<br>
+    
+                            company = ''.join(company.split()) if company else None<br>
+    
+                            education = experience.xpath('.//li[@data-control-name = <br>
+                            "education_see_more"]//span/text()').extract_first()<br>
+    
+                            education = ' '.join(education.split()) if education else None<br>
+    
+                            location = ' '.join(sel.xpath('//*[@class = "t-16 t-black t-normal inline- <br>
+                            block"]/text()').extract_first().split())<br>
+
+                            url = driver.current_url<br>
+                        </div><br>
+                        In this same for loop, we write the code to store this scraped data into our “writer”.<br><br>
+                        
+                        <div class="code">
+                            writer.writerow([name,<br>
+                            position,<br>
+                            company,<br>
+                            education,<br>
+                            location,<br>
+                            url])<br>
+                            driver.quit()<br>
+                        </div><br>
+                        And that’s it! Congrats if you followed till the end, and try to automate your data collection needs using web scraping. It is advisable to not be aggressive while scraping data points(for example, by using sleep() function), else you may get banned.<br><br>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

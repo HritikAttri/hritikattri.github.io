@@ -1,0 +1,48 @@
+/* Medium sized laptops: (1199 to 1440px) */
+@media only screen and (max-width: 1440px) {
+
+}
+
+/* Small laptops: (1024 to 1199px) */
+@media only screen and (max-width: 1199px) {
+
+}
+
+/* Tablets: (768 to 1023px) */
+@media only screen and (max-width: 1023px) {
+
+}
+
+/* Large phones: (480 to 767px) */
+@media only screen and (max-width: 767px) {
+
+}
+
+/* Small phones: (0 to 480px) */
+@media only screen and (max-width: 480px) {
+    html {
+        font-size: 16px;
+    }
+
+    .row {
+        width: 85%;
+    }
+
+    .blog {
+        border-radius: 0.5%;
+        -webkit-border-radius: 0.5%;
+        -moz-border-radius: 0.5%;
+        -ms-border-radius: 0.5%;
+        -o-border-radius: 0.5%;
+}
+
+    .code {
+        width: 100%;
+        font-size: 65%;
+    }
+
+    .blog-img {
+        margin: 30px auto 30px auto;
+    }
+
+}

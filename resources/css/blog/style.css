@@ -1,0 +1,147 @@
+/* ======================== */
+/* Root CSS */
+/* ======================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;     /* This allows us to include padding and margin in element's total width and height. */
+}
+
+html {
+    background-color: #e6e6e6;
+    color: rgb(0, 0, 0);
+    font-family: 'Lato', sans-serif;         /* sans-serif will be displayed if error in displaying Lato */
+    font-size: 20px;
+    font-weight: 300;
+    text-rendering: optimizeLegibility;
+}
+
+/* ======================== */
+/* Grid CSS changes */
+/* ======================== */
+
+.row {
+    max-width: 1140px;
+    margin: 0 auto 0 auto;
+}
+
+/* ======================== */
+/* Element level CSS */
+/* ======================== */
+
+h1 {
+    color: black;
+    font-size: 200%;
+    font-weight: 300;
+    text-transform: uppercase; 
+    text-align: center;
+    letter-spacing: 1px;
+    word-spacing: 3px;
+    padding: 100px 0 100px 0;
+}
+
+h1:after {
+    display: block;
+    height: 2px;
+    width: 250px;
+    background-color: black;
+    content: " ";
+    margin: 15px auto 15px auto;
+}
+
+h2 {
+    font-size: 170%;
+    font-weight: 300;
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    word-spacing: 3px;
+    margin: 0 0 0 0;
+    padding: 30px 10px 10px 10px;
+    text-align: center;
+}
+
+h2:after {
+    display: block;
+    height: 2px;
+    width: 150px;
+    background-color: #8e44ad;
+    content: " ";
+    margin: 15px auto 30px auto;
+}
+
+/* ======================== */
+/* Blog */
+/* ======================== */
+
+.blog {
+    padding: 20px 30px 20px 30px;
+    margin-bottom: 80px;
+    background: rgb(214, 209, 209);
+    box-shadow: 5px 10px 10px 10px rgb(121, 120, 120);
+    transition: background 0.3s, box-shadow 0.3s;
+    -webkit-transition: background 0.3s, box-shadow 0.3s;
+    -moz-transition: background 0.3s, box-shadow 0.3s;
+    -ms-transition: background 0.3s, box-shadow 0.3s;
+    -o-transition: background 0.3s, box-shadow 0.3s;
+    border-radius: 1%;
+    -webkit-border-radius: 1%;
+    -moz-border-radius: 1%;
+    -ms-border-radius: 1%;
+    -o-border-radius: 1%;
+}
+
+.date-written {
+    font-size: 120%;
+    font-weight: 300;
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    word-spacing: 3px;
+    padding: 0 0 30px 0;
+}
+
+.date-written-imported {
+    font-size: 120%;
+    font-weight: 300;
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    word-spacing: 3px;
+    padding-bottom: 5px;
+}
+
+.imported {
+    font-size: 80%;
+    padding-bottom: 30px;
+}
+
+.link {
+    color: blue;
+    text-decoration: none;
+}
+
+.code {
+    width: 75%;
+    padding: 10px;
+    margin: 15px 0 15px 0;
+    box-shadow: 3px 3px 5px 5px rgb(121, 120, 120);
+    background: rgba(245, 207, 255, 0.692);
+    transition: background 0.3s, box-shadow 0.3s;
+    -webkit-transition: background 0.3s, box-shadow 0.3s;
+    -moz-transition: background 0.3s, box-shadow 0.3s;
+    -ms-transition: background 0.3s, box-shadow 0.3s;
+    -o-transition: background 0.3s, box-shadow 0.3s;
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 400;
+    font-size: 75%;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+}
+
+.blog-img {
+    display: block;
+    text-align: center;
+    width: 70%;
+    margin: 45px auto 45px auto;
+    background-size: cover;
+    background-position: center;
+}
