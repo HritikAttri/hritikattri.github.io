@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>My page</title>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="resources/css/index/style.css">
+        <link rel="stylesheet" href="resources/css/index/queries.css">
+        <link rel="stylesheet" href="vendors/css/normalize.css">
+        <link rel="stylesheet" href="vendors/css/grid.css">
+        <link rel="stylesheet" href="vendors/css/animate.css">
+    </head>
+    <body>
+        <header>
+            <nav>
+                <div class="row">
+                    <a class="mobile-nav js--mobile-nav"><ion-icon name="menu-outline"></ion-icon></a>
+                    <ul class="main-nav js--main-nav">
+                        <li><a href="#">My blog</a></li>
+                        <li><a href="#" class="js--scroll-to-my-projects">My projects</a></li>
+                        <li><a href="#">View Resume</a></li>
+                        <li><a href="#" class="js--scroll-to-contact-me">Contact me</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="row">
+                <div class="col span-1-of-2 my-photo">
+                    <img class="my-photo" src="vendors/img/me.jpg" alt="">
+                </div>
+                <div class="col span-1-of-2 header-part">
+                    <h1>Welcome to my website</h1>    
+                    <p>Hi there. My name is Hritik Attri, I am a data science practitioner 
+                        and this is my portfolio. I've completed projects in different 
+                        fields in data science, such as computer vision, natural language processing, 
+                        reinforcement learning, and so on. This page summarizes some of that work.</p>
+                    <!-- <a class="btn btn-header-visible" href="#">Read my blog</a>   -->
+                    <!-- <a class="btn btn-header-hidden" href="#">About me</a> -->
+                </div>
+            </div>
+        </header>
+        <section class="projects js--projects">
+            <h2>My projects</h2>
+            <div class="row project-row">
+                <div class="col span-1-of-2 projects-part js--projects-part-1">
+                    <img src="vendors/img/blood_cells_images.png" alt="" class="img-projects">
+                    <div class="project-description">
+                        <h3 class="projects-part-text-header">Blood cell image detection</h3>
+                        <p class="projects-part-text">Here, cell was identified to be one of Neutrophil, Eosinophil, Monocyte or Lymphocyte using deep learing.</p>
+                    </div>
+                    <a href="https://github.com/HritikAttri/blood_cells_images" class="btn btn-header-hidden">View code</a>
+                </div>
+                <div class="col span-1-of-2 projects-part js--projects-part-2">
+                    <img src="vendors/img/reinforcement_learning_trader_bot.png" alt="" class="img-projects">
+                    <div>
+                        <h3 class="projects-part-text-header">Stock market prediction</h3>
+                        <p class="projects-part-text">Stock market prediction using reinforcement learning(by using the 
+                           Bell equation) and deep learning.</p>
+                    </div>
+                    <a href="https://github.com/HritikAttri/reinforcement-learning-trader-bot" class="btn btn-header-hidden">View code</a>
+                </div>
+            </div>
+            <div class="row project-row">
+                <div class="col span-1-of-2 projects-part js--projects-part-3">
+                    <img src="vendors/img/facebook_babi_paper.png" alt="" class="img-projects">
+                    <div>
+                        <h3 class="projects-part-text-header">Question answer chatbot</h3>
+                        <p class="projects-part-text">An implementation of the Facebook bAbI research paper for building a question answer chatbot.</p>
+                    </div>
+                    <a href="https://github.com/HritikAttri/memory_networks" class="btn btn-header-hidden">View code</a>
+                </div>
+                <div class="col span-1-of-2 projects-part js--projects-part-4">
+                    <img src="vendors/img/model_deployment.png" alt="" class="img-projects">
+                    <div>
+                        <h3 class="projects-part-text-header"> Model deployment</h3>
+                        <p class="projects-part-text">A sentiment classifier deployed to Docker using Flask.</p>
+                    </div>
+                    <a href="https://github.com/HritikAttri/deployment" class="btn btn-header-hidden">View code</a>
+                </div>
+            </div>
+            <div class="row project-row">
+                <div class="col span-1-of-2 projects-part js--projects-part-5">
+                    <img src="vendors/img/machine_translation.png" alt="" class="img-projects">
+                    <div>
+                        <h3 class="projects-part-text-header">Machine translation</h3>
+                        <p class="projects-part-text">A deep learning model built using the Seq2Seq architecture with attention for translating from English to Spanish language.</p>
+                    </div>
+                    <a href="https://github.com/HritikAttri/seq2seq_machine_translation" class="btn btn-header-hidden">View code</a>
+                </div>
+                <div class="col span-1-of-2 projects-part js--projects-part-6">
+                    <img src="vendors/img/time_series.png" alt="" class="img-projects">
+                    <div>
+                        <h3 class="projects-part-text-header">Time series models</h3>
+                        <p class="projects-part-text">Implementation and analysis of various time series models such as ARIMA, SARIMAX, etc. in Python.</p>
+                    </div>
+                    <a href="https://github.com/HritikAttri/time-series-modelling" class="btn btn-header-hidden">View code</a>
+                </div>
+            </div>
+            <h5>View more of my projects at my github page.</h5>
+        </section>
+        <section class="work-experience">
+            <h2>Work Experience</h2>
+            <div class="row">
+                <div class="col span-1-of-2 work-experience-sample">
+                    <a class="icon-work-experience"><ion-icon name="briefcase-outline"></ion-icon></a>
+                    <p class="work-experience-text">Internship program in Machine Learning at Verzeo</p>
+                    <p class="work-duration">(1 Feb 2020 - 31 March 2020)</p>
+                </div>
+                <div class="col span-1-of-2 work-experience-sample">
+                    <a class="icon-work-experience"><ion-icon name="book-outline"></ion-icon></a>
+                    <p class="work-experience-text">Writer at Analytics Vidhya Medium publication</p>
+                    <p class="work-duration">(From Oct 2019)</p>
+                </div>
+            </div>
+
+        </section>
+        <section class="footer js--footer">
+            <h2>Contact me</h2>
+            <div class="row">
+                <div class="col span-1-of-3 social-links">
+                    <a href="https://www.linkedin.com/in/hritik-attri-6a7775146/?originalSubdomain=in" class="icon-footer"><ion-icon name="logo-linkedin"></ion-icon></a>
+                    <p>LinkedIn</p>
+                </div>
+                <div class="col span-1-of-3 social-links">
+                    <a class="icon-footer"><ion-icon name="mail-outline"></ion-icon></a>
+                    <p>Email address</p>
+                    <p>hritikattri10@gmail.com</p>
+                </div>
+                <div class="col span-1-of-3 social-links">
+                    <a href="https://github.com/HritikAttri" class="icon-footer"><ion-icon name="logo-github"></ion-icon></a>
+                    <p>GitHub</p>
+                </div>
+            </div>
+        </section>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+        <script src="vendors/js/jquery.waypoints.min.js"></script>
+        <script src="resources/js/index/script.js"></script>
+    </body>
+</html>
