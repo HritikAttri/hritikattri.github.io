@@ -245,6 +245,10 @@
         font-size: 15px;
     }
 
+    h5 {
+        padding-top: 20px;
+    }
+
     /* ======================== */
     /* Navigation */
     /* ======================== */
@@ -272,7 +276,7 @@
     }
 
     .span-1-of-2.my-photo > img {
-        top: 35%;
+        top: 28.5%;
         left: 50%;
     }
 
@@ -303,5 +307,9 @@
 
     .span-1-of-2.projects-part {
         width: 100%;
+    }
+
+    .social-links {
+        padding-bottom: 20px;
     }
 }
