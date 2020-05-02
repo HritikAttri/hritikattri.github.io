@@ -253,6 +253,7 @@
         display: inline-block;
         font-size: 80%;
         padding-bottom: 2px;
+        font-size: 20px;
     }
 
     .my-photo img {
@@ -271,7 +272,7 @@
     }
 
     .span-1-of-2.my-photo > img {
-        top: 40%;
+        top: 35%;
         left: 50%;
     }
 
