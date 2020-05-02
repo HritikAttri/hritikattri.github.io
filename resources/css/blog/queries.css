@@ -18,8 +18,8 @@
 
 }
 
-/* Small phones: (0 to 480px) */
-@media only screen and (max-width: 480px) {
+/* Small phones: (0 to 501px) */
+@media only screen and (max-width: 501px) {
     html {
         font-size: 16px;
     }
