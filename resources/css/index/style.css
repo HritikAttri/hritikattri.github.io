@@ -295,6 +295,15 @@ header {
     transform: scale(1.03);
 }
 
+.projects-part {
+    box-shadow: 0;
+    transition: background 0.3s box-shadow 1s opacity 0.5s;
+    -webkit-transition: background 0.3s box-shadow 1s opacity 0.5s;
+    -moz-transition: background 0.3s box-shadow 1s opacity 0.5s;
+    -ms-transition: background 0.3s box-shadow 1s opacity 0.5s;
+    -o-transition: background 0.3s box-shadow 1s opacity 0.5s;
+}
+
 .projects-part:link,
 .projects-part:visited {
     height: 100%;
@@ -306,13 +315,8 @@ header {
 .projects-part:hover,
 .projects-part:active {
     height: 100%;
-    box-shadow: 3px 3px 3px 3px rgb(121, 120, 120);
+    box-shadow: 1px 1px 6px 6px rgb(121, 120, 120);
     background: rgba(231, 223, 223, 0.692);
-    transition: background 0.3s, box-shadow 0.3s;
-    -webkit-transition: background 0.3s, box-shadow 0.3s;
-    -moz-transition: background 0.3s, box-shadow 0.3s;
-    -ms-transition: background 0.3s, box-shadow 0.3s;
-    -o-transition: background 0.3s, box-shadow 0.3s;
 }
 
 .projects-part-text-header {
