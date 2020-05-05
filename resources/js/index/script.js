@@ -71,8 +71,8 @@ $(document).ready(function() {
     /* Reponsive navigation */
     /* ======================== */
 
-    $(".js--mobile-nav").click(function() {
-        var nav = $(".js--main-nav");
-        nav.slideToggle(200);
-    })
+    // $(".js--mobile-nav").click(function() {
+    //     var nav = $(".js--main-nav");
+    //     nav.slideToggle(200);
+    // })
 });
