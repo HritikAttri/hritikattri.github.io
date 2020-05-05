@@ -75,26 +75,30 @@
     /* Navigation */
     /* ======================== */
 
-    .mobile-nav {
+    /* .mobile-nav {
         display: inline-block;
         padding-right: 10px;
-    }
+    } */
 
-    .main-nav {
+    /* .main-nav {
         float: left;
         margin: 0 0 0 60px;
-    }
+    } */
 
     .sticky-nav  a.mobile-nav ion-icon {
         color: black;
     }
 
-    .main-nav li a:link,
+    .main-nav li a {
+        font-size: 90%;
+        padding: 0 0px 10px 0;
+    }
+
+    /* .main-nav li a:link,
     .main-nav li a:visited {
         display: block;
         border: 0;
-        padding: 0 200px 10px 0;
-    }
+    } */
 
     /* ======================== */
     /* Header */
