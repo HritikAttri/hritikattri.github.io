@@ -289,7 +289,7 @@
 }
 
 /* Smaller phones: (0 to 360px) */
-@media only screen and (max-width: 360px) {
+@media only screen and (max-width: 380px) {
     html {
         font-size: 15px;
     }
@@ -313,7 +313,8 @@
     } */
 
     .sticky-nav .main-nav li {
-        margin: 2px 1.5px 0 4px;
+        padding: 12px 0 12px 0;
+        margin: 0 1.5px 0 4px;
     }
 
     .sticky-nav  a.mobile-nav ion-icon {
@@ -321,17 +322,18 @@
     }
 
     .main-nav {
+        display: block;
         float: none;
+        margin: 2px auto;
     }
 
     .main-nav li {
-        margin-left: 4px;
-        margin-right: 1.5px;
+        margin: 17.5px 2px 0px 5px;
     }
 
     .main-nav li a {
         font-size: 85%;
-        padding: 0 0px 7.5px 0;
+        padding: 0 0px 5px 0;
         margin-right: 0;
     }
 
