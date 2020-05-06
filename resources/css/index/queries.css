@@ -287,3 +287,114 @@
         padding-bottom: 20px;
     }
 }
+
+/* Smaller phones: (0 to 360px) */
+@media only screen and (max-width: 360px) {
+    html {
+        font-size: 15px;
+    }
+
+    h5 {
+        padding-top: 20px;
+    }
+
+    /* ======================== */
+    /* Navigation */
+    /* ======================== */
+
+    /* .mobile-nav {
+        display: inline-block;
+        padding-right: 10px;
+    } */
+
+    /* .main-nav {
+        float: left;
+        margin: 0 0 0 60px;
+    } */
+
+    .sticky-nav .main-nav li {
+        margin: 2px 1.5px 0 4px;
+    }
+
+    .sticky-nav  a.mobile-nav ion-icon {
+        color: black;
+    }
+
+    .main-nav {
+        float: none;
+    }
+
+    .main-nav li {
+        margin-left: 4px;
+        margin-right: 1.5px;
+    }
+
+    .main-nav li a {
+        font-size: 85%;
+        padding: 0 0px 7.5px 0;
+        margin-right: 0;
+    }
+
+    /* .main-nav li a:link,
+    .main-nav li a:visited {
+        display: block;
+        border: 0;
+    } */
+
+    /* ======================== */
+    /* Header */
+    /* ======================== */
+
+    .my-photo img {
+        height: 130px;
+        width: 130px;
+        margin-top: 25px;
+    }
+
+    .header-part h1 {
+        padding-top: 60px;
+    }
+
+    .header-part p {
+        padding-left: 30px;
+        padding-right: 40px;
+    }
+
+    .span-1-of-2.my-photo > img {
+        top: 28.5%;
+        left: 50%;
+    }
+
+    .span-1-of-2.header-part {
+        top: 70%;
+        left: 50%;
+        width: 100%;
+    }
+
+    /* ======================== */
+    /* Projects */
+    /* ======================== */
+
+    .row {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .img-projects {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .projects-part {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .span-1-of-2.projects-part {
+        width: 100%;
+    }
+
+    .social-links {
+        padding-bottom: 20px;
+    }
+}
