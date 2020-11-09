@@ -364,6 +364,36 @@ header {
 }
 
 /* ======================== */
+/* Accomplishments */
+/* ======================== */
+
+.accomplishments {
+    background-color: rgb(235, 231, 231)
+}
+
+.work-experience-sample {
+    padding: 20px 90px 40px 100px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    word-spacing: 2px;
+    line-height: 130%;
+}
+
+.work-duration {
+    font-size: 90%;
+    padding-top: 10px;
+}
+
+.icon-work-experience {
+    color: #66317c;
+    font-size: 200%;
+}
+
+.work-experience-text {
+    margin-top: 25px;
+}
+
+/* ======================== */
 /* Footer */
 /* ======================== */
 
